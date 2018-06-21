@@ -16,7 +16,7 @@
           ></v-text-field>
         </div> 
         <div class="flex text-right" style="margin-left: auto;">
-          <v-btn flat class="my-0 mx-0 btn-border-left" @click="moveProcess" v-if="trangThaiHoSoList[index].id === 'new'">
+          <!-- <v-btn flat class="my-0 mx-0 btn-border-left" @click="moveProcess" v-if="trangThaiHoSoList[index].id === 'new'">
             <v-icon size="16">send</v-icon>
             Chuyển hồ sơ vào xử lý
           </v-btn>
@@ -24,13 +24,102 @@
             <v-icon size="16">send</v-icon>
             Trả kết quả
           </v-btn>
-          <v-btn flat class="my-0 mx-0" @click="moveDelete" v-if="showMultiDelete(trangThaiHoSoList[index].id)">
+          <v-btn flat class="my-0 mx-0 btn-border-left" @click="moveDelete" v-if="showMultiDelete(trangThaiHoSoList[index].id)">
             <v-icon size="16">delete</v-icon>
             Xóa
-          </v-btn>
+          </v-btn> -->
+         <!--  <v-btn flat class="my-0 mx-0 btn-border-left" @click="advanced_filter = !advanced_filter">
+            Nâng cao
+            <v-icon class="mr-2" v-if="!advanced_filter">keyboard_arrow_down</v-icon>
+            <v-icon class="mr-2" v-if="advanced_filter">keyboard_arrow_up</v-icon>
+          </v-btn> -->
         </div>
       </div>
     </div>
+    <v-slide-y-transition>
+      <div v-if="advanced_filter" class="panel" style="height: auto;width: 100%;margin: 0;border-radius: 0;border-top: 1px solid white;background-color: #e1e2e1;padding: 15px;">
+        <div class="layout wrap">
+          <v-flex xs12 sm3 class="pr-4 no-wrap">
+            <content-placeholders class="mt-1" v-if="loadingTable">
+              <content-placeholders-text :lines="1" />
+            </content-placeholders>
+            <v-text-field
+            v-else
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm3 class="pr-4 no-wrap">
+            <content-placeholders class="mt-1" v-if="loadingTable">
+              <content-placeholders-text :lines="1" />
+            </content-placeholders>
+            <v-text-field
+            v-else
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm3 class="pr-4 no-wrap">
+            <content-placeholders class="mt-1" v-if="loadingTable">
+              <content-placeholders-text :lines="1" />
+            </content-placeholders>
+            <v-text-field
+            v-else
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm3 class="pr-4 no-wrap">
+            <content-placeholders class="mt-1" v-if="loadingTable">
+              <content-placeholders-text :lines="1" />
+            </content-placeholders>
+            <v-text-field
+            v-else
+            ></v-text-field>
+          </v-flex>
+        </div>
+        <div class="layout wrap">
+          <v-flex xs12 sm3 class="pr-4 no-wrap">
+            <content-placeholders class="mt-1" v-if="loadingTable">
+              <content-placeholders-text :lines="1" />
+            </content-placeholders>
+            <v-text-field
+            v-else
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm3 class="pr-4 no-wrap">
+            <content-placeholders class="mt-1" v-if="loadingTable">
+              <content-placeholders-text :lines="1" />
+            </content-placeholders>
+            <v-text-field
+            v-else
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm3 class="pr-4 no-wrap">
+            <content-placeholders class="mt-1" v-if="loadingTable">
+              <content-placeholders-text :lines="1" />
+            </content-placeholders>
+            <v-text-field
+            v-else
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm3 class="pr-4 no-wrap">
+            <content-placeholders class="mt-1" v-if="loadingTable">
+              <content-placeholders-text :lines="1" />
+            </content-placeholders>
+            <v-text-field
+            v-else
+            ></v-text-field>
+          </v-flex>
+        </div>
+        <v-layout wrap>
+          <v-flex xs12 sm12>
+            <v-btn color="primary" class="mx-0 my-0 mt-2">
+              <v-icon size="16">search</v-icon>
+              Tìm kiếm
+            </v-btn>
+            <v-btn color="primary" class="mx-0 my-0 mt-2">
+              <v-icon size="16">delete</v-icon>
+              Xóa lọc
+            </v-btn>
+          </v-flex>
+        </v-layout>
+      </div>
+    </v-slide-y-transition>
     <content-placeholders v-if="loadingTable">
       <content-placeholders-img />
       <content-placeholders-heading />
@@ -84,37 +173,37 @@
               </v-btn>
               <span>Xem hồ sơ</span>
             </v-tooltip>
-            <v-tooltip top v-if="checkAction(trangThaiHoSoList[index].id).includes('send')">
+            <v-tooltip top v-if="checkAction(props.item.dossierStatus).includes('send')">
               <v-btn style="width:30px;height:30px" slot="activator" @click="toDetailPhieuHen(index, props.item.dossierId)" icon class="mx-0 my-0" :disabled="checkPrint(props.item)">
                 <v-icon size="16" class="mx-0" style="color:#1976d2">print</v-icon>
               </v-btn>
               <span>In phiếu hẹn</span>
             </v-tooltip>
-            <v-tooltip top v-if="checkAction(trangThaiHoSoList[index].id).includes('send')">
+            <v-tooltip top v-if="checkAction(props.item.dossierStatus).includes('send')">
               <v-btn style="width:30px;height:30px" slot="activator" icon class="mx-0 my-0" @click="chuyenXuLy(props.item)" :disabled="checkPrint(props.item)">
                 <v-icon size="16" class="mx-0" style="color:#1976d2">send</v-icon>
               </v-btn>
               <span>Chuyển hồ sơ vào xử lý</span>
             </v-tooltip>
-            <v-tooltip top v-if="checkAction(trangThaiHoSoList[index].id).includes('ticket')">
+            <v-tooltip top v-if="checkAction(props.item.dossierStatus).includes('ticket')">
               <v-btn style="width:30px;height:30px" slot="activator" icon class="mx-0 my-0">
                 <v-icon size="16" class="mx-0" style="color:#1976d2">description</v-icon>
               </v-btn>
               <span>Phiếu kiểm soát</span>
             </v-tooltip>
-            <v-tooltip top v-if="checkAction(trangThaiHoSoList[index].id).includes('result')">
+            <v-tooltip top v-if="checkAction(props.item.dossierStatus).includes('result')">
               <v-btn style="width:30px;height:30px" slot="activator" icon class="mx-0 my-0" :to="'/danh-sach-ho-so/' + index + '/tra-ket-qua/' + props.item.dossierId">
-                <v-icon size="16" class="mx-0" style="color:#1976d2">send</v-icon>
+                <v-icon size="16" style="color:#1976d2" class="mx-0">send</v-icon>
               </v-btn>
               <span>Trả kết quả</span>
-            </v-tooltip>
-            <!-- <v-tooltip top v-if="checkAction(trangThaiHoSoList[index].id).includes('view')">
-              <v-btn slot="activator" icon class="mx-0 my-0">
+            </v-tooltip> 
+            <!-- <v-tooltip top v-if="checkAction(props.item.dossierStatus).includes('view')">
+              <v-btn style="width:30px;height:30px" slot="activator" icon class="mx-0 my-0">
                 <v-icon size="16" class="mx-0">remove_red_eye</v-icon>
               </v-btn>
               <span>Xem danh sách giấy tờ cần trả</span>
             </v-tooltip> -->
-            <v-tooltip top v-if="checkAction(trangThaiHoSoList[index].id).includes('delete')">
+            <v-tooltip top v-if="checkAction(props.item.dossierStatus).includes('delete')">
               <v-btn style="width:30px;height:30px" slot="activator" icon class="mx-0 my-0" @click="deleteDosier(props.item.dossierId, props.index)">
                 <v-icon size="16" class="mx-0" color="red darken-3">delete</v-icon>
               </v-btn>
@@ -125,7 +214,7 @@
       </v-data-table>
       <div class="mt-3 text-xs-right table-footer">
         <div class="left">
-          <v-btn outline color="indigo" class="my-0 mx-0 mr-2" @click="moveProcess" v-if="trangThaiHoSoList[index].id === 'new'">
+          <!-- <v-btn outline color="indigo" class="my-0 mx-0 mr-2" @click="moveProcess" v-if="trangThaiHoSoList[index].id === 'new'">
             <v-icon size="16">send</v-icon>
             Chuyển hồ sơ vào xử lý
           </v-btn>
@@ -136,7 +225,7 @@
           <v-btn outline color="indigo" class="my-0 mx-0 mr-2" @click="moveDelete" v-if="showMultiDelete(trangThaiHoSoList[index].id)">
             <v-icon size="16">delete</v-icon>
             Xóa
-          </v-btn>
+          </v-btn> -->
         </div>
         <span class="mr-2"><i>Tổng số <span class="red--text">{{total}}</span> kết quả được tìm thấy</i></span>
         <v-pagination v-model="page" :length="pages"></v-pagination>
@@ -153,6 +242,8 @@ export default {
   data: () => ({
     keywords: '',
     selected: [],
+    advanced_filter: false,
+    statusAll: 'new,receiving,processing,waiting,paying,done,expired,cancelled',
     headers: [
       {
         text: 'STT',
@@ -218,9 +309,11 @@ export default {
       vm.selected = []
       vm.keywords = ''
       vm.page = 1
+      var statusFilter = vm.trangThaiHoSoList[val] === 'all' ? vm.statusAll : vm.trangThaiHoSoList[val].id
+      console.log(statusFilter)
       let filter = {
         keywords: vm.keywords,
-        status: vm.trangThaiHoSoList[val],
+        status: '',
         start: vm.page * vm.itemperpage - vm.itemperpage,
         end: vm.page * vm.itemperpage
       }
@@ -258,6 +351,8 @@ export default {
         return 'result,ticket'
       } else if (status === 'done') {
         return 'view,ticket'
+      } else if (status === 'ended') {
+        return 'view,ticket'
       } else if (status === 'waiting') {
         return 'view,ticket'
       } else if (status === 'receiving') {
@@ -266,6 +361,8 @@ export default {
         return 'view,ticket'
       } else if (status === 'processing') {
         return 'view,ticket'
+      } else {
+        return 'delete'
       }
     },
     checkPrint (item, status) {
@@ -287,9 +384,12 @@ export default {
     },
     loadDataTable () {
       var vm = this
+      console.log(vm.trangThaiHoSoList[vm.index].id)
+      var statusFilter = vm.trangThaiHoSoList[vm.index].id === 'all' ? vm.statusAll : vm.trangThaiHoSoList[vm.index]
+      console.log(statusFilter)
       let filter = {
         keywords: vm.keywords,
-        status: vm.trangThaiHoSoList[vm.index],
+        status: '',
         start: vm.page * vm.itemperpage - vm.itemperpage,
         end: vm.page * vm.itemperpage
       }
@@ -488,15 +588,8 @@ export default {
       })
       console.log(vm.selected)
     },
-    viewChitiet (item, index) {
-      if (item.dossierStatus === 'done') {
-        return '/group/cong-xu-ly/mot-cua-dien-tu#/danh-sach-ho-so/' + index + '/chi-tiet-ho-so/' + item.dossierId
-      } else {
-        return '/group/cong-xu-ly/mot-cua-dien-tu#/danh-sach-ho-so/' + index + '/tiep-nhan-ho-so/' + item.dossierId
-      }
-    },
     toDetailDossier (index, dossierId) {
-      var url = '/group/cong-xu-ly/mot-cua-dien-tu#/danh-sach-ho-so/' + index + '/tiep-nhan-ho-so/' + dossierId
+      var url = '/group/cong-xu-ly/mot-cua-dien-tu#/danh-sach-ho-so/' + index + '/chi-tiet-ho-so/' + dossierId
       if (index === '4') {
         url = '/group/cong-xu-ly/mot-cua-dien-tu#/danh-sach-ho-so/' + index + '/chi-tiet-ho-so/' + dossierId
       }
@@ -527,6 +620,22 @@ export default {
         duration = block + ' giờ'
       }
       return duration
+    },
+    viewChitiet (item, index) {
+      if (item.dossierStatus === 'done') {
+        return '/group/cong-xu-ly/mot-cua-dien-tu#/danh-sach-ho-so/' + index + '/chi-tiet-ho-so/' + item.dossierId
+      } else {
+        return '/group/cong-xu-ly/mot-cua-dien-tu#/danh-sach-ho-so/' + index + '/chi-tiet-ho-so/' + item.dossierId
+      }
+    }
+  },
+  filters: {
+    processUnit (arg) {
+      if (arg === 1) {
+        return 'giờ'
+      } else if (arg === 0) {
+        return 'ngày'
+      }
     }
   }
 }

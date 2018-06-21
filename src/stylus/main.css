@@ -72,6 +72,7 @@ padding-bottom: 10px;
 
 .theme--light .navigation-drawer {
     background-color: transparent;
+    padding: 6px 8px;
 }
 .nav_trang_thai_ho_so .list__tile__action {
     min-width: 32px;
@@ -112,11 +113,22 @@ padding-bottom: 10px;
     text-transform: uppercase;
     cursor: pointer;
 }
+.background-triangle-small {
+    background-color: #0b72ba;
+    display: inline-block;
+    padding: 3px;
+    width: 25px;
+    text-align: right;
+    color: white;
+    position: relative;
+    margin-right: 20px;
+    text-transform: uppercase;
+}
 .background-triangle-small + div.header_tools, .background-triangle-big + div.header_tools {
     width: -webkit-calc( 100% - 100% );
     width: calc(100% - 100% );
 }
-.background-triangle-small:before, .background-triangle-big:before {
+.background-triangle-big:before {
     content: "";
     position: absolute;
     top: 1px;
@@ -126,6 +138,17 @@ padding-bottom: 10px;
     border-top: 28px solid #0b72ba;
     border-left: 28px solid transparent;
     border-bottom: 28px solid transparent;
+}
+.background-triangle-small:before {
+    content: "";
+    position: absolute;
+    top: 1px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    right: -2px;
+    border-top: 19px solid #0b72ba;
+    border-left: 19px solid transparent;
+    border-bottom: 19px solid transparent
 }
 .text-right {
     text-align: right;
@@ -181,6 +204,8 @@ body .navigation-drawer .btn__add__menu {
     background: #0b72ba !important;
     border-color: #0b72ba !important;
     font-weight: normal;
+    width: 100%;
+    margin: 0px 0px 6px 0px;
 }
 
 body .navigation-drawer .btn__add__menu .btn__content:before {
@@ -228,18 +253,18 @@ body .expaned__list__data .expansion-panel__header {
     height: 38px;
 }
 .group__thanh_phan .flex__checkbox .input-group {
-    width: 100px;
+    width: 78px;
     max-width: 100px;
     height: 38px;
     max-height: 38px;
     border-right: 1px solid #e2d7d7;
-    background: #f6f7f6;
+    /* background: #f6f7f6; */
 }
 .group__thanh_phan .flex__checkbox .input-group:first-child {
     border-left: 1px solid #e2d7d7;
 }
 .group__thanh_phan .input-group.input-group--selection-controls .input-group__input .icon--selection-control {
-    width: 100px;
+    /* width: 100px; */
 }
 .group__thanh_phan .input-group--selection-controls__ripple:before {
     left: 83%;
@@ -273,9 +298,9 @@ table .stt_column ,
 table .action_column {
     padding: 2px 5px !important;
 }
-table .action_column {
+/* table .action_column {
     width: 125px;
-}
+} */
 
 .table-bordered table.table thead tr {
     height: 42px;
@@ -391,3 +416,141 @@ body .input-group--select .input-group__selections__comma {
 .vdatetime-slot__not-available, .vdatetime-slot__available {
     display: none
 }
+.group__thanh_phan .input-group.input-group--selection-controls .input-group__input .icon--selection-control {
+    width: auto;
+}
+.group__thanh_phan .icon--selection-control {
+    left: 24px !important
+}
+.group__thanh_phan .input-group {
+    flex: none
+}
+.absolute-lable {
+    position: absolute;
+    right: 120px;
+    top: 10px
+}
+.absolute-lable span {
+    display: inline-block;
+    width: 76px;
+    text-align: center
+}
+/* style table landing.vue */
+.table-landing table.datatable--select-all thead th:nth-child(1), 
+.table-landing table.datatable--select-all tbody td:nth-child(1){
+    min-width: 0px !important;
+    width: 3% !important;
+}
+.table-landing table.datatable--select-all thead th:nth-child(2), 
+.table-landing table.datatable--select-all tbody td:nth-child(2){
+    min-width: 0px !important;
+    width: 4% !important;
+}
+.table-landing table.datatable--select-all thead th:nth-child(3), 
+.table-landing table.datatable--select-all tbody td:nth-child(3){
+    min-width: 0px !important;
+    width: 6% !important;
+}
+
+.table-landing table.datatable--select-all thead th:nth-child(4), 
+.table-landing table.datatable--select-all tbody td:nth-child(4){
+    min-width: 0px !important;
+    width: 12% !important;
+}
+
+.table-landing table.datatable--select-all thead th:nth-child(5), 
+.table-landing table.datatable--select-all tbody td:nth-child(5){
+    min-width: 0px !important;
+    width: 28% !important;
+}
+
+.table-landing table.datatable--select-all thead th:nth-child(6), 
+.table-landing table.datatable--select-all tbody td:nth-child(6){
+    min-width: 0px !important;
+    width: 15% !important;
+}
+
+.table-landing table.datatable--select-all thead th:nth-child(7), 
+.table-landing table.datatable--select-all tbody td:nth-child(7){
+    min-width: 0px !important;
+    width: 9% !important;
+}
+
+.table-landing table.datatable--select-all thead th:nth-child(8), 
+.table-landing table.datatable--select-all tbody td:nth-child(8){
+    min-width: 0px !important;
+    width: 10% !important;
+}
+
+.table-landing table.datatable--select-all thead th:nth-child(9), 
+.table-landing table.datatable--select-all tbody td:nth-child(9){
+    min-width: 140px !important;
+    width: 13% !important;
+}
+.table-landing table.datatable--select-all tbody td:nth-child(5) a:hover {
+    color: #1976d2 !important;
+}
+/*  */
+.nav_trang_thai_ho_so .list__tile--link {
+    padding: 0 8px !important
+}
+.header-text-field {
+    float:left !important;
+    height: 100%;
+}
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+.row-blue {
+    align-items: center;
+}
+.hover-pointer {
+    cursor: pointer;
+}
+.hover-pointer-download:hover {
+    cursor: pointer;
+    font-weight: bold
+}
+.tabs {
+    border: 1px solid #e1e2e1;
+}
+.expansion-pl .expansion-panel__header, .expansion-pl-transparent .expansion-panel__header {
+    padding-left: 0px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+.expansion-pl .expansion-panel__body .expansion-panel__container .expansion-panel__header,
+.expansion-pl-transparent .expansion-panel__container .expansion-panel__header {
+    /* padding-bottom: 0px;
+    padding-top: 0px; */
+    border-bottom: 1px solid #ddd
+}
+.form-chitiet .tabs .tabs__bar, .form-chitiet .expansion-pl .expansion-panel__header {
+    background-color: #dae8e8
+}
+.form-chitiet .tabs .tabs__bar, .form-chitiet .expansion-pl-transparent .expansion-panel__header {
+    background-color: transparent
+}
+.tabs__container {
+    height: 38px;
+    border-bottom: 1px solid #e1e2e1;
+}
+.list_history_style {
+    border-bottom: 1px solid #e1e2e1;
+}
+/*  */
+.group__thanh_phan, .group__thanh_phan .flex__checkbox, .group__thanh_phan .checkbox,.group__thanh_phan .radio-group,
+.group__thanh_phan .checkbox .input-group__input, .group__thanh_phan .radio-group .input-group__input, .group__thanh_phan .radio{
+    height: 100% !important;
+    max-height: none !important
+}
+.group__thanh_phan .flex__checkbox .input-group:first-child {
+    border-right: 0px;
+}
+
+.group__thanh_phan .input-group--selection-controls__ripple {
+    display: none
+}
+/*  */

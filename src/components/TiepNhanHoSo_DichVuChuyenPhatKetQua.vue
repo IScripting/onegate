@@ -1,8 +1,8 @@
 <template>
   <div style="position: relative;">
-    <v-expansion-panel>
+    <v-expansion-panel class="expansion-pl">
       <v-expansion-panel-content hide-actions value="1">
-        <div slot="header">VI. DỊCH VỤ CHUYỂN PHÁT KẾT QUẢ</div>
+        <div slot="header"><div class="background-triangle-small"> VI. </div>DỊCH VỤ CHUYỂN PHÁT KẾT QUẢ</div>
         <v-card>
           <v-card-text>
             
@@ -23,7 +23,7 @@
                   </content-placeholders>
                   <v-select
                     v-else
-                    :items="resultServices"
+                    :items="postalServiceItems"
                     item-text="itemName"
                     item-value="itemCode"
                     v-model="dichVuChuyenPhatKetQua.postalServiceCode"
@@ -42,10 +42,30 @@
                   </content-placeholders>
                   <v-text-field
                     v-else
-                    name="resultTelNo"
                     v-model="dichVuChuyenPhatKetQua.postalTelNo"
                     append-icon="phone"
+                    :required='dichVuChuyenPhatKetQua.viaPostal'
                   ></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm2>
+                  <content-placeholders class="mt-1" v-if="loading">
+                    <content-placeholders-text :lines="1" />
+                  </content-placeholders>
+                  <v-subheader v-else class="pl-0">Mã bưu cục: </v-subheader>
+                </v-flex>
+                <v-flex xs12 sm4>
+                  <content-placeholders class="mt-1" v-if="loading">
+                    <content-placeholders-text :lines="1" />
+                  </content-placeholders>
+                  <v-select
+                    v-else
+                    :items="vnPostItems"
+                    item-text="itemName"
+                    item-value="itemCode"
+                    v-model="dichVuChuyenPhatKetQua.vnPostCode"
+                    :required='dichVuChuyenPhatKetQua.viaPostal'
+                    autocomplete
+                  ></v-select>
                 </v-flex>
                 <v-flex xs12>
 
@@ -62,7 +82,6 @@
                   </content-placeholders>
                   <v-text-field
                     v-else
-                    name="resultAddress"
                     v-model="dichVuChuyenPhatKetQua.postalAddress"
                     multi-line
                     rows="2"
@@ -153,21 +172,31 @@ export default {
     citys: [],
     resultDistricts: [],
     resultWards: [],
-    dichVuChuyenPhatKetQua: {}
+    vnPostItems: [],
+    postalServiceItems: [
+      {
+        itemName: 'VNPOST',
+        itemCode: 'VNPOST'
+      }
+    ]
   }),
   computed: {
     loading () {
       return this.$store.getters.loading
+    },
+    dichVuChuyenPhatKetQua () {
+      return this.$store.getters.dichVuChuyenPhatKetQua
     }
   },
   created () {
     var vm = this
     vm.$nextTick(function () {
-      vm.dichVuChuyenPhatKetQua = vm.$store.getters.dichVuChuyenPhatKetQua
-      vm.dichVuChuyenPhatKetQua.postalCityCode = vm.$store.getters.getCityVal
-      vm.dichVuChuyenPhatKetQua.postalDistrictCode = vm.$store.getters.getDistrictVal
-      vm.dichVuChuyenPhatKetQua.postalWardCode = vm.$store.getters.getWardVal
-      let filter = {
+      // vm.dichVuChuyenPhatKetQua = vm.$store.getters.dichVuChuyenPhatKetQua
+      // vm.dichVuChuyenPhatKetQua.postalCityCode = vm.$store.getters.getCityVal
+      // vm.dichVuChuyenPhatKetQua.postalDistrictCode = vm.$store.getters.getDistrictVal
+      // vm.dichVuChuyenPhatKetQua.postalWardCode = vm.$store.getters.getWardVal
+      console.log('dichVuChuyenPhatKetQua---------------', vm.dichVuChuyenPhatKetQua)
+      var filter = {
         collectionCode: 'ADMINISTRATIVE_REGION',
         level: 0,
         parent: 0
@@ -175,13 +204,27 @@ export default {
       vm.$store.getters.getDictItems(filter).then(function (result) {
         vm.citys = result.data
       })
-      filter.parent = vm.dichVuChuyenPhatKetQua.postalCityCode
+      if (vm.dichVuChuyenPhatKetQua.postalCityCode) {
+        filter.parent = vm.dichVuChuyenPhatKetQua.postalCityCode
+        filter.level = 1
+        vm.$store.getters.getDictItems(filter).then(function (result) {
+          vm.resultDistricts = result.data
+        })
+      }
+      if (vm.dichVuChuyenPhatKetQua.postalDistrictCode) {
+        filter.parent = vm.dichVuChuyenPhatKetQua.postalDistrictCode
+        filter.level = 1
+        vm.$store.getters.getDictItems(filter).then(function (result) {
+          vm.resultWards = result.data
+        })
+      }
+      filter = {
+        collectionCode: 'VNPOST_CODE',
+        level: 0,
+        parent: 0
+      }
       vm.$store.getters.getDictItems(filter).then(function (result) {
-        vm.resultDistricts = result.data
-      })
-      filter.parent = vm.dichVuChuyenPhatKetQua.postalDistrictCode
-      vm.$store.getters.getDictItems(filter).then(function (result) {
-        vm.resultWards = result.data
+        vm.vnPostItems = result.data
       })
     })
   },

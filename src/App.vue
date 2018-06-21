@@ -12,7 +12,7 @@
         <content-placeholders-text :lines="7" />
         </content-placeholders>
       <v-list v-else class="py-0 nav_trang_thai_ho_so">
-        <v-list-tile v-for="(item, index) in trangThaiHoSoList" :key="item.id" :to="'/danh-sach-ho-so/' + index">
+        <v-list-tile v-for="(item, index) in trangThaiHoSoList" :key="item.id" :to="changeList(item, index)">
           <v-list-tile-action>
             <v-icon v-if="index == currentIndex">{{item.action_active}}</v-icon>
             <v-icon v-else>{{item.action}}</v-icon>
@@ -27,12 +27,20 @@
     <v-content>
       <router-view></router-view>
     </v-content>
-    
+    <confirm ref="confirm"></confirm>
   </v-app>
 </template>
 
 <script>
+  // import router from '@/router'
+  import Confirm from './components/Confirm.vue'
   export default {
+    components: {
+      'confirm': Confirm
+    },
+    mounted () {
+      this.$root.$confirm = this.$refs.confirm
+    },
     data: () => ({}),
     computed: {
       loading () {
@@ -43,6 +51,18 @@
       },
       trangThaiHoSoList () {
         return this.$store.getters.loadtrangThaiHoSoList
+      }
+    },
+    methods: {
+      changeList (item, index) {
+        if (item.id === 'all') {
+          console.log('all')
+          let url = '/tra-cuu-ho-so/' + index
+          return url
+        } else {
+          let url = '/danh-sach-ho-so/' + index
+          return url
+        }
       }
     },
     created () {

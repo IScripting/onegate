@@ -1,8 +1,8 @@
 <template>
   <div style="position: relative;">
-    <v-expansion-panel>
+    <v-expansion-panel class="expansion-pl">
       <v-expansion-panel-content hide-actions value="1">
-        <div slot="header">V. LỆ PHÍ</div>
+        <div slot="header"><div class="background-triangle-small"> V. </div>LỆ PHÍ</div>
         <v-card>
           <v-card-text>
             <v-layout wrap>
@@ -18,12 +18,14 @@
                 </content-placeholders>
                 <v-text-field
                   v-else
-                  v-model="lePhi.fee"
-                  :rules="[rules.number]"
-                  v-on:keyup.native="clearTotalMoney"
+                  v-model.lazy="lePhi.fee"
+                  v-money="money"
                 ></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 class="hidden-xs-and-down"></v-flex>
+              <v-flex xs12 sm6>
+
+              </v-flex>
+              <!-- <v-flex xs12 sm6 class="pl-4 pt-2 hidden-xs-and-down">Hạn mức: {{lePhi.request|currency}} đ</v-flex> -->
               <v-flex xs12 sm2>
                 <content-placeholders class="mt-1" v-if="loading">
                   <content-placeholders-text :lines="1" />
@@ -51,15 +53,20 @@
 </template>
 
 <script>
+import * as utils from '../store/onegate_utils'
+import {VMoney} from 'v-money'
 export default {
   data: () => ({
-    rules: {
-      number: (value) => {
-        const pattern = /^\d+$/
-        return pattern.test(value) || 'Sai định dạng kiểu dữ liệu số.'
-      }
+    money: {
+      decimal: '',
+      thousands: '.',
+      prefix: '',
+      suffix: '',
+      precision: 0,
+      masked: false
     }
   }),
+  directives: {money: VMoney},
   computed: {
     loading () {
       return this.$store.getters.loading
@@ -69,13 +76,20 @@ export default {
     },
     dossier () {
       return this.$store.getters.dossier
+    },
+    subStatusNew () {
+      return this.$store.getters.subStatusNew
     }
   },
   methods: {
     clearTotalMoney () {
-      if (this.lePhi.fee === '') {
-        this.lePhi.fee = 0
-      }
+      var vm = this
+      console.log(vm.lePhi.fee)
+    }
+  },
+  filters: {
+    currency (val) {
+      return utils.currency(val)
     }
   }
 }
